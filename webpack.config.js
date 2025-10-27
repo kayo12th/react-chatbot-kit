@@ -5,11 +5,16 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   entry: './src/index.ts',
   plugins: [new MiniCssExtractPlugin()],
-  target: 'node',
+  target: 'es2015',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'module',
+    chunkFormat: 'module',
+    hashFunction: 'sha256',
+  },
+  experiments: {
+    outputModule: true,
   },
   module: {
     rules: [
@@ -31,5 +36,5 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.jsx', '.js', '.ts'],
   },
-  externals: ['react', nodeExternals()],
+  externals: ['react', nodeExternals({ importType: 'module' })],
 };

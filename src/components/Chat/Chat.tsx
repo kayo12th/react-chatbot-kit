@@ -251,6 +251,13 @@ const Chat = ({
     setInputValue('');
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as any);
+    }
+  };
+
   const customButtonStyle = { backgroundColor: '' };
   if (customStyles && customStyles.chatButton) {
     customButtonStyle.backgroundColor = customStyles.chatButton.backgroundColor;
@@ -303,11 +310,13 @@ const Chat = ({
             className="react-chatbot-kit-chat-input-form"
             onSubmit={handleSubmit}
           >
-            <input
+            <textarea
               className="react-chatbot-kit-chat-input"
               placeholder={placeholder}
               value={input}
               onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              rows={3}
             />
             <button
               className="react-chatbot-kit-chat-btn-send"
